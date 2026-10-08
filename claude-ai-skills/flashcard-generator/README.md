@@ -1,12 +1,12 @@
 # Flashcard Generator
 
-> **Source:** Evolved from [flashcard-generator/prompt-v4.txt](https://github.com/maaarcooo/llm-custom-instructions/blob/main/flashcard-generator/prompt-v4.txt). Current skill version: **flashcard-v3.9**. A standalone fallback prompt is maintained as [`prompt-v7.md`](https://github.com/maaarcooo/llm-custom-instructions/blob/main/flashcard-generator/prompt-v7.md) for when the skill feature is unavailable. It matches flashcard-v3.8 and does not yet carry the v3.9 changes.
+> **Source:** Evolved from [flashcard-generator/prompt-v4.txt](https://github.com/maaarcooo/llm-custom-instructions/blob/main/flashcard-generator/prompt-v4.txt). Current skill version: **flashcard-v3.10**. A standalone fallback prompt is maintained as [`prompt-v7.md`](https://github.com/maaarcooo/llm-custom-instructions/blob/main/flashcard-generator/prompt-v7.md) for when the skill feature is unavailable. It matches flashcard-v3.8 and does not yet carry the v3.9 changes.
 
 Generate study flashcards from PDF or Markdown content. Cards are terse, exam-aligned, and quick to self-grade during review.
 
 ## The Problem
 
-Creating effective flashcards manually is time-consuming and inconsistent. Poor card design — ambiguous phrasing, recognition-based questions, answers that leak other cards' content — undermines spaced repetition rather than supporting it. Factual errors in source notes get cemented through months of reviews. And model defaults drift across versions: the same prompt that produced clean, terse decks on one model produces padded, over-elaborated decks on the next.
+Creating effective flashcards manually is time-consuming and inconsistent. Poor card design (ambiguous phrasing, recognition-based questions, answers that leak other cards' content) undermines spaced repetition rather than supporting it. Factual errors in source notes get cemented through months of reviews. And model defaults drift across versions: the same prompt that produced clean, terse decks on one model produces padded, over-elaborated decks on the next.
 
 ## The Solution
 
@@ -19,16 +19,16 @@ This split is the result of testing across model versions: prescriptive style ru
 
 ## Key Features
 
-- **Flexible atomicity** — One idea per card, but a definition may bundle one directly associated detail (formula, unit, key property) when naturally recalled together
-- **Bundle or split, not both** — A bundled detail never also gets its own card; no answer contains another card's answer
-- **Accuracy verification** — The named exam board's specification is the authority. A confident fix goes on the cards and is listed in chat; doubtful content is left out with the reason given; no card ever carries a statement the model believes to be wrong. Legitimate syllabus-level simplifications are kept, out-of-spec content is flagged rather than added, and nothing is silently rewritten
-- **True as phrased** — Every card holds read on its own. A condition the answer depends on goes in the question ("an insulated gas"), but only a condition the specification itself states with the fact, never a refinement from beyond the level
-- **Worked single-step cards** — Each main equation candidates calculate with gets one worked card with values and units beside its formula card
-- **Practicals covered as methods** — What is measured and with what, what is kept constant, the reason for each key step, and the sources of error the material explains
-- **Judgement on exam-supplied content** — Constants and data values the exam supplies are left out. Equations and rules candidates use fluently are carded even when a formula booklet gives them; only a long, seldom-used supplied formula is left out, and each omission is listed
-- **Constrained final check** — Exactly three passes: name the condition on a card that is only true in context, resolve contradicting cards, and add one compare card per pair the source itself contrasts
-- **Six card types** — Definition (with reverse cards for terms only), recall, formula application, cloze, explain, enumeration
-- **Content-driven deck size** — No card-count targets; the material decides
+- **Flexible atomicity**: One idea per card, but a definition may bundle one directly associated detail (formula, unit, key property) when naturally recalled together
+- **Bundle or split, not both**: A bundled detail never also gets its own card; no answer contains another card's answer
+- **Accuracy verification**: The named exam board's specification is the authority. A confident fix goes on the cards and is listed in chat; doubtful content is left out with the reason given; no card ever carries a statement the model believes to be wrong. Legitimate syllabus-level simplifications are kept, out-of-spec content is flagged rather than added, and nothing is silently rewritten
+- **True as phrased**: Every card holds read on its own. A condition the answer depends on goes in the question ("an insulated gas"), but only a condition the specification itself states with the fact, never a refinement from beyond the level
+- **Worked single-step cards**: Each main equation candidates calculate with gets one worked card with values and units beside its formula card
+- **Practicals covered as methods**: What is measured and with what, what is kept constant, the reason for each key step, and the sources of error the material explains
+- **Judgement on exam-supplied content**: Constants and data values the exam supplies are left out. Equations and rules candidates use fluently are carded even when a formula booklet gives them; only a long, seldom-used supplied formula is left out, and each omission is listed
+- **Constrained final check**: Exactly three passes: name the condition on a card that is only true in context, resolve contradicting cards, and add one compare card per pair the source itself contrasts
+- **Six card types**: Definition (with reverse cards for terms only), recall, formula application, cloze, explain, enumeration
+- **Content-driven deck size**: No card-count targets; the material decides
 
 ## When to Use
 
@@ -47,11 +47,12 @@ Instructions the user gives with the material set the scope: the coverage rules 
 
 ## Card Style
 
-The terse register is the priority — when any rule conflicts with brevity, brevity wins.
+The terse register is the priority: when any rule conflicts with brevity, brevity wins.
 
 - **One idea per card, judged flexibly**: answers are one to two short sentences; a definition may bundle one directly associated detail, never a reasoning chain or a second independent concept
 - **Bundle or split, not both**: each detail lives in exactly one place in the deck
-- **No rationale padding**: no "because..." justifications appended to recall answers — if reasoning matters, it gets its own card
+- **Punctuation**: no em-dashes or semicolons on a card, and a reverse card is written `<definition> - what term is this?`
+- **No rationale padding**: no "because..." justifications appended to recall answers. If reasoning matters, it gets its own card
 - **Production over recognition**: no yes/no or true/false questions; rephrase so the answer must be generated
 - **Unambiguous**: each question has exactly one correct answer
 - **True as phrased**: a card is read alone, so the condition its answer depends on goes in the question. Loose source wording is tightened and the change reported. A condition is added only when the specification states it with the fact (Ohm's law at constant temperature), not when it is true but beyond the level (the pressure at which water boils)
@@ -62,12 +63,12 @@ The terse register is the priority — when any rule conflicts with brevity, bre
 
 - **Definition**: forward card always; reverse card as a separate line for key terms only (terms the exam asks candidates to define). Only a term's definition is reversed, never a law, a principle, or a description of when something happens
 - **Recall**: single facts, values, units, equations
-- **Formula application**: for each main equation candidates are expected to calculate with, one worked single-step card with values and units beside its formula card — never multi-step
+- **Formula application**: for each main equation candidates are expected to calculate with, one worked single-step card with values and units beside its formula card, never multi-step
 - **Cloze**: one deletion per card, used sparingly, only where context cues recall without giving the answer away
 - **Explain**: only where the source itself explains the reasoning and it is a likely exam point; mechanism stated in at most two sentences
 - **Enumeration**: one card per list item; a list answer may contain at most 3 items, and only if the source treats them as a single fact
 
-Compare/contrast cards are not a free card type — they are generated only by the final check below.
+Compare/contrast cards are not a free card type: they are generated only by the final check below.
 
 ## Coverage
 
@@ -80,9 +81,9 @@ Compare/contrast cards are not a free card type — they are generated only by t
 
 After generating, the deck is scanned for exactly three failure modes:
 
-1. **Unstated context** — a card that is only true with context it does not state; the condition is named in the question
-2. **Contradictions** — cards whose answers conflict as phrased (e.g. "Which radiation is most ionising?" answered differently under unstated contexts); each question is rephrased to name its context
-3. **Source-contrasted pairs** — where the source explicitly contrasts two concepts, one compare card states the specific point of divergence
+1. **Unstated context**: a card that is only true with context it does not state; the condition is named in the question
+2. **Contradictions**: cards whose answers conflict as phrased (e.g. "Which radiation is most ionising?" answered differently under unstated contexts); each question is rephrased to name its context
+3. **Source-contrasted pairs**: where the source explicitly contrasts two concepts, one compare card states the specific point of divergence
 
 No other compare cards are generated, and never two compare cards for the same distinction.
 
@@ -105,7 +106,7 @@ One card per line, question and answer separated by a single pipe. No preamble, 
 ```
 What is the unit of electrical resistance? | Ohm (Ω)
 Define specific heat capacity | The energy required to raise the temperature of 1 kg of a substance by 1 °C
-The energy required to raise the temperature of 1 kg of a substance by 1 °C — what quantity is this? | Specific heat capacity
+The energy required to raise the temperature of 1 kg of a substance by 1 °C - what quantity is this? | Specific heat capacity
 What is the equation for kinetic energy? | $E_k = \frac{1}{2}mv^2$
 What is the resistance of a component with 6 V across it and 2 A through it? | $R = \frac{V}{I} = \frac{6}{2} = 3\;\Omega$
 The SI unit of energy is the [...] | joule (J)
@@ -149,8 +150,9 @@ Then trigger by asking for flashcards from source material.
 
 ## Version Notes
 
-- **flashcard-v3.9** — Brought into line with the generation prompt tuned in NeuroCards on Claude Haiku 5.5, Sonnet 5.5 and Opus 5.5 (October 2026). New rules: every card true as phrased, with its condition in the question; one worked single-step card per main equation; practicals covered as methods; reverse cards for terms only; no cards for rearranged equations, for constants and data values the exam supplies, or for content the material says need not be learned. Three of these were loosened after testing showed them too tight: a table the material teaches is carded row by row (a deck had dropped where digestive enzymes are made), a condition is added only when the specification states it with the fact (a GCSE card had gained "at standard pressure"), and a formula booklet does not decide what gets a card (Opus had dropped the quotient rule). The Coverage section replaces "prioritise, and do not pad", which cost a deck its statement of the first law of thermodynamics and a unit. The check after generating grows from two passes to three. Chat flags gain `Tightened:`. The rules were tested as the NeuroCards prompt, which returns JSON; this skill file, with its pipe-separated output, was not run separately
-- **flashcard-v3.8** — Accuracy pass reworked: the named qualification and exam board's specification is the authority; a confident correction goes on the cards and is listed in chat, a doubtful one means the content is left out with the reason given, and no card ever carries a statement the model believes wrong. Out-of-spec content is flagged rather than added. Chat flags are now a release-note bullet list (`Fixed:` / `Skipped:` / `Kept:` / `Flagged:`). Prompted by real decks generated from OCR A Level notes where a swapped example table was kept because it only "seemed" reversed
-- **flashcard-v3.7** — Renamed from anki-flashcard-generator to flashcard-generator. Broadened trigger to all flashcard requests. Added LaTeX equation formatting (KaTeX-compatible `$...$` / `$$...$$`) for mathematical expressions
-- **flashcard-v3.6** — Rebuilt around the defect-blocking vs style-prescribing rule split. Softened atomicity to permit definition + associated-detail bundling, added bundle-or-split, banned circular answers, constrained the interference check to two cases, removed card-count anchors, scoped reverse cards to key terms, removed GCSE-era "Higher Tier" references, added the pipe-character exclusion. Validated on A-Level Physics sources inside and outside projects with convergent output
-- **flashcard-v3.3–flashcard-v3.5** — Principle-heavy versions (depth of processing, universal bidirectional cards, personal connection); produced over-elaborated decks and were superseded
+- **flashcard-v3.10**: Punctuation rule taken from the NeuroCards prompt: no em-dashes or semicolons on a card, and a reverse card ends ` - what term is this?` with a hyphen. The skill's own text no longer uses em-dashes
+- **flashcard-v3.9**: Brought into line with the generation prompt tuned in NeuroCards on Claude Haiku 5.5, Sonnet 5.5 and Opus 5.5 (October 2026). New rules: every card true as phrased, with its condition in the question; one worked single-step card per main equation; practicals covered as methods; reverse cards for terms only; no cards for rearranged equations, for constants and data values the exam supplies, or for content the material says need not be learned. Three of these were loosened after testing showed them too tight: a table the material teaches is carded row by row (a deck had dropped where digestive enzymes are made), a condition is added only when the specification states it with the fact (a GCSE card had gained "at standard pressure"), and a formula booklet does not decide what gets a card (Opus had dropped the quotient rule). The Coverage section replaces "prioritise, and do not pad", which cost a deck its statement of the first law of thermodynamics and a unit. The check after generating grows from two passes to three. Chat flags gain `Tightened:`. The rules were tested as the NeuroCards prompt, which returns JSON; this skill file, with its pipe-separated output, was not run separately
+- **flashcard-v3.8**: Accuracy pass reworked: the named qualification and exam board's specification is the authority; a confident correction goes on the cards and is listed in chat, a doubtful one means the content is left out with the reason given, and no card ever carries a statement the model believes wrong. Out-of-spec content is flagged rather than added. Chat flags are now a release-note bullet list (`Fixed:` / `Skipped:` / `Kept:` / `Flagged:`). Prompted by real decks generated from OCR A Level notes where a swapped example table was kept because it only "seemed" reversed
+- **flashcard-v3.7**: Renamed from anki-flashcard-generator to flashcard-generator. Broadened trigger to all flashcard requests. Added LaTeX equation formatting (KaTeX-compatible `$...$` / `$$...$$`) for mathematical expressions
+- **flashcard-v3.6**: Rebuilt around the defect-blocking vs style-prescribing rule split. Softened atomicity to permit definition + associated-detail bundling, added bundle-or-split, banned circular answers, constrained the interference check to two cases, removed card-count anchors, scoped reverse cards to key terms, removed GCSE-era "Higher Tier" references, added the pipe-character exclusion. Validated on A-Level Physics sources inside and outside projects with convergent output
+- **flashcard-v3.3 to flashcard-v3.5**: Principle-heavy versions (depth of processing, universal bidirectional cards, personal connection); produced over-elaborated decks and were superseded

@@ -22,40 +22,41 @@ If the user gives instructions with the material (for example restricting to one
 
 This register is the priority. When any rule below conflicts with brevity, prefer brevity.
 
-- **One idea per card, judged flexibly.** Answers are one to two short sentences. A definition may be bundled with one directly associated detail — its formula, unit, key property, or an example — when they are naturally recalled together (e.g. impulse: definition plus $F \times t$). Never bundle a reasoning chain or a second independent concept
+- **One idea per card, judged flexibly.** Answers are one to two short sentences. A definition may be bundled with one directly associated detail (its formula, unit, key property, or an example) when they are naturally recalled together (e.g. impulse: definition plus $F \times t$). Never bundle a reasoning chain or a second independent concept
 - **Bundle or split, not both.** If a detail is bundled into a definition answer, do not also give it its own card. If it has its own card, leave it out of the definition. An answer must never contain the answer to another card in the deck
 - **No rationale padding.** Do not append "because..." justifications to recall answers. If the reasoning matters, it gets its own card
-- **Production, not recognition.** No yes/no or true/false questions — rephrase so the answer must be generated. Not "Have quarks been observed in isolation? | No", but "In what combinations are quarks always observed? | Pairs (mesons) or groups of three (baryons)"
+- **Production, not recognition.** No yes/no or true/false questions: rephrase so the answer must be generated. Not "Have quarks been observed in isolation? | No", but "In what combinations are quarks always observed? | Pairs (mesons) or groups of three (baryons)"
 - **Unambiguous.** Each question has exactly one correct answer. Rephrase vague questions ("What is important about X?") to target one specific property
 - **True as phrased.** Every card is true read on its own, with no page around it. Name in the question the condition the answer depends on: "What happens to the internal energy of an insulated gas when it expands?", not "What happens to the internal energy of a gas when it expands?". Where the source states something loosely, tighten it and list the change in the chat response. A condition belongs on a card only when the specification states it with the fact, as it does for Ohm's law at constant temperature. Leave out a condition that is true but that the level never mentions, such as the pressure at which water boils
+- **Punctuation.** No em-dashes or semicolons on a card. Use a comma, a colon before a list of values, or two sentences
 - **Plain language.** Simple, direct wording. Match the source's syllabus level
 - **LaTeX for equations.** Write all mathematical expressions using standard LaTeX notation: inline with `$...$` and display with `$$...$$`. For example, `$E_k = \frac{1}{2}mv^2$` rather than `Ek = ½mv²`. Use LaTeX for all symbols, fractions, subscripts, superscripts, and special characters in equations
 
 ## Card Types
 
-- **Definition** — `What is X? | [definition]`. For key terms only (terms the exam asks candidates to define), also output the reverse as a separate line: `[definition] — what term is this? | X`. Reverse the definition of a term only, never a law, a principle, or a description of when something happens
-- **Recall** — single facts, values, units, equations
-- **Formula application** — for each main equation candidates are expected to calculate with, one worked single-step card with values and units beside its formula card: `What is the resistance of a component with 6 V across it and 2 A through it? | $R = \frac{V}{I} = \frac{6}{2} = 3\;\Omega$`. Never multi-step
-- **Cloze** — `The SI unit of energy is the [...] | joule (J)`. Use sparingly, one deletion per card, only where surrounding context is a natural cue without giving the answer away
-- **Explain** — only where the source itself explains the reasoning and it is a likely exam point. Answer states the mechanism concisely, still within two sentences. Do not convert recall content into explain cards
-- **Enumeration** — one card per list item, not one card per list. A list answer may contain at most 3 items, and only if the source treats them as a single fact
+- **Definition**: `What is X? | [definition]`. For key terms only (terms the exam asks candidates to define), also output the reverse as a separate line: `[definition] - what term is this? | X`. Reverse the definition of a term only, never a law, a principle, or a description of when something happens
+- **Recall**: single facts, values, units, equations
+- **Formula application**: for each main equation candidates are expected to calculate with, one worked single-step card with values and units beside its formula card: `What is the resistance of a component with 6 V across it and 2 A through it? | $R = \frac{V}{I} = \frac{6}{2} = 3\;\Omega$`. Never multi-step
+- **Cloze**: `The SI unit of energy is the [...] | joule (J)`. Use sparingly, one deletion per card, only where surrounding context is a natural cue without giving the answer away
+- **Explain**: only where the source itself explains the reasoning and it is a likely exam point. Answer states the mechanism concisely, still within two sentences. Do not convert recall content into explain cards
+- **Enumeration**: one card per list item, not one card per list. A list answer may contain at most 3 items, and only if the source treats them as a single fact
 
 ## Coverage
 
-Aim for thorough coverage of the source. Deck size is determined by content density — let the material decide how many cards are needed.
+Aim for thorough coverage of the source. Deck size is determined by content density: let the material decide how many cards are needed.
 
 - **Every definition, law and equation gets its card**, along with the unit of each quantity the topic introduces. A law or principle candidates are asked to state gets a card asking for the statement. Do not make a card for a general unit the material only uses in passing, such as the SI unit of mass
-- **Experimental methods and required practicals** — cover what is measured and with what, what is kept constant and how, the reason for each key step, and the sources of error the material explains
-- **A table the material sets out as content to learn is carded row by row** — food tests, vocabulary lists, dates, stopping distances
+- **Experimental methods and required practicals**: cover what is measured and with what, what is kept constant and how, the reason for each key step, and the sources of error the material explains
+- **A table the material sets out as content to learn is carded row by row**: food tests, vocabulary lists, dates, stopping distances
 - **A formula booklet does not decide what gets a card.** An equation or rule candidates are expected to know and use fluently gets its card even when the exam supplies it, such as the quotient rule or $pV = nRT$. Leave out a supplied formula only when it is long, seldom used, and looked up in practice, and list each one you left out in the chat response
 
 ## Final Check
 
 After generating the deck, check for three failure modes only:
 
-1. **Unstated context** — a card that is only true with context it does not state. Name the condition in the question (see True as phrased)
-2. **Contradictions** — two cards whose answers conflict as phrased (e.g. "Which radiation is most ionising?" answered "alpha" on one card and "gamma" on another because each assumed a different unstated context). Rephrase each question to name its context so both are unambiguous
-3. **Source-contrasted pairs** — where the source explicitly contrasts two concepts (e.g. elastic limit vs limit of proportionality), add one compare card stating the specific point of divergence
+1. **Unstated context**: a card that is only true with context it does not state. Name the condition in the question (see True as phrased)
+2. **Contradictions**: two cards whose answers conflict as phrased (e.g. "Which radiation is most ionising?" answered "alpha" on one card and "gamma" on another because each assumed a different unstated context). Rephrase each question to name its context so both are unambiguous
+3. **Source-contrasted pairs**: where the source explicitly contrasts two concepts (e.g. elastic limit vs limit of proportionality), add one compare card stating the specific point of divergence
 
 Do not generate compare cards beyond these cases, and never two compare cards that test the same distinction.
 
@@ -90,7 +91,7 @@ Question | Answer
 ```
 What is the unit of electrical resistance? | Ohm (Ω)
 Define specific heat capacity | The energy required to raise the temperature of 1 kg of a substance by 1 °C
-The energy required to raise the temperature of 1 kg of a substance by 1 °C — what quantity is this? | Specific heat capacity
+The energy required to raise the temperature of 1 kg of a substance by 1 °C - what quantity is this? | Specific heat capacity
 What is the equation for kinetic energy? | $E_k = \frac{1}{2}mv^2$
 What is the resistance of a component with 6 V across it and 2 A through it? | $R = \frac{V}{I} = \frac{6}{2} = 3\;\Omega$
 The SI unit of energy is the [...] | joule (J)
