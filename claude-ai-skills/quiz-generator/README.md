@@ -1,6 +1,6 @@
 # Quiz Generator
 
-> **Source:** Split out of `flashcard-generator` (its v3.11 Quizzes section) into a skill of its own. Current skill version: **quiz-v1.0**. A standalone fallback prompt is maintained as [`quiz-generator/prompt-v1.md`](https://github.com/maaarcooo/llm-custom-instructions/blob/main/quiz-generator/prompt-v1.md) for when the skill feature is unavailable. It matches quiz-v1.0.
+> **Source:** Split out of `flashcard-generator` (its v3.11 Quizzes section) into a skill of its own. Current skill version: **quiz-v1.1**. A standalone fallback prompt is maintained as [`quiz-generator/prompt-v2.md`](https://github.com/maaarcooo/llm-custom-instructions/blob/main/quiz-generator/prompt-v2.md) for when the skill feature is unavailable. It matches quiz-v1.1.
 
 Generate multiple choice questions from PDF or Markdown content, as a quiz file that NeuroCards imports. Each question tests one idea, is quick to answer, and is fair to someone who knows the topic.
 
@@ -16,7 +16,7 @@ The question rules NeuroCards generates quizzes with, as a skill. It keeps the a
 
 - **Believable wrong choices**: Mistakes a learner makes (a related term, a misconception, a value with a typical slip), of the same length and form as the correct choice, and plainly wrong to someone who knows the topic
 - **One idea per question**: The question has one clear answer before the choices are read
-- **Two to four choices**: Four by default. More than one correct choice only when the question asks for all that apply
+- **Two to four choices**: Four by default. More than one correct choice only when the question's wording asks for several, with no "(Select all that apply)" note
 - **No "all of the above"**, "none of the above" or "which of these is NOT"
 - **Short explanations**: One or two sentences on why the correct choice is correct, left out for plain recall
 - **Accuracy verification**: The named exam board's specification is the authority. A confident fix goes in the quiz and is listed in chat, doubtful content is left out with the reason given, and no choice is ever marked correct when the model believes it wrong
@@ -97,4 +97,5 @@ Then trigger by asking for multiple choice questions from source material.
 
 ## Version Notes
 
+- **quiz-v1.1**: Several correct choices are asked for by the question's own wording, with no "(Select all that apply)" note in the question, since NeuroCards shows one when a question has more than one correct choice
 - **quiz-v1.0**: The Quizzes section of `flashcard-generator` v3.11 as a skill of its own, so the card rules no longer apply to questions. Rules match the prompt NeuroCards generates quizzes with (October 2026): one idea per question, believable wrong choices of the same form as the correct one, two to four choices, all that apply only when the question says so, short choices, an explanation only where the answer is not its own, and a final check for unstated context and arguably correct wrong choices. Not yet run as a skill on its own; the rules were tested as the NeuroCards prompt, which returns JSON

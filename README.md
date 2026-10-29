@@ -14,7 +14,7 @@ Skills are grouped by target platform. Each platform directory contains independ
 |-------|---------|-----------------|--------|
 | [extracting-pdfs](#extracting-pdfs) | Extract and clean PDF content to markdown | - | Active |
 | [flashcard-generator](#flashcard-generator) | Generate flashcard decks from study materials | flashcard-v3.12 | Active |
-| [quiz-generator](#quiz-generator) | Generate multiple choice quizzes for NeuroCards from study materials | quiz-v1.0 | Active |
+| [quiz-generator](#quiz-generator) | Generate multiple choice quizzes for NeuroCards from study materials | quiz-v1.1 | Active |
 | [revision-notes-generator](#revision-notes-generator) | Create concise revision notes from study materials | notes-v3.6 | Active |
 | [handoff](#handoff) | Create structured handoff documents for session continuity | - | Active |
 | [discuss](#discuss) | Discuss and clarify direction before starting work | - | Active |
@@ -133,7 +133,7 @@ or code fences. The raw output will be saved directly to a text file.
 
 Generate multiple choice questions from PDF or Markdown content, as a quiz file that NeuroCards imports. Keeps the accuracy pass of the flashcard generator and replaces the card rules with rules for questions and their choices: believable wrong choices of the same form as the correct one, two to four choices, no "all of the above", and a short explanation where the answer is not plain recall.
 
-**Current version:** `quiz-v1.0`
+**Current version:** `quiz-v1.1`
 
 > **Full documentation:** See [`claude-ai-skills/quiz-generator/README.md`](claude-ai-skills/quiz-generator/README.md) for the question rules, output format and final check.
 
@@ -283,7 +283,7 @@ The original PDF conversion skill using visual PDF understanding.
 
 ## Versioning
 
-This repository uses per-skill version labels. The current study-generation labels are `flashcard-v3.12` for `flashcard-generator`, `quiz-v1.0` for `quiz-generator` and `notes-v3.6` for `revision-notes-generator`. See [Releases](../../releases) for version history.
+This repository uses per-skill version labels. The current study-generation labels are `flashcard-v3.12` for `flashcard-generator`, `quiz-v1.1` for `quiz-generator` and `notes-v3.6` for `revision-notes-generator`. See [Releases](../../releases) for version history.
 
 ## License
 
