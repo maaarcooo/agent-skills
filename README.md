@@ -13,7 +13,8 @@ Skills are grouped by target platform. Each platform directory contains independ
 | Skill | Purpose | Current Version | Status |
 |-------|---------|-----------------|--------|
 | [extracting-pdfs](#extracting-pdfs) | Extract and clean PDF content to markdown | - | Active |
-| [flashcard-generator](#flashcard-generator) | Generate flashcard decks and multiple choice quizzes from study materials | flashcard-v3.11 | Active |
+| [flashcard-generator](#flashcard-generator) | Generate flashcard decks from study materials | flashcard-v3.12 | Active |
+| [quiz-generator](#quiz-generator) | Generate multiple choice quizzes for NeuroCards from study materials | quiz-v1.0 | Active |
 | [revision-notes-generator](#revision-notes-generator) | Create concise revision notes from study materials | notes-v3.6 | Active |
 | [handoff](#handoff) | Create structured handoff documents for session continuity | - | Active |
 | [discuss](#discuss) | Discuss and clarify direction before starting work | - | Active |
@@ -34,6 +35,7 @@ Skills are grouped by target platform. Each platform directory contains independ
 | [flashcard-generator (ChatGPT)](#chatgpt-skills) | Generate flashcard decks from study materials | Active |
 | [handoff (ChatGPT)](#chatgpt-skills) | Create structured session handoffs | Active |
 | [learn (ChatGPT)](#chatgpt-skills) | Support conceptual learning and understanding | Active |
+| [quiz-generator (ChatGPT)](#chatgpt-skills) | Generate multiple choice quizzes for NeuroCards from study materials | Active |
 | [revision-notes-generator (ChatGPT)](#chatgpt-skills) | Create concise revision notes from study materials | Active |
 
 ### Codex Skills
@@ -62,6 +64,7 @@ agent-skills/
 │   ├── extracting-pdfs/
 │   ├── handoff/
 │   ├── learn/
+│   ├── quiz-generator/
 │   └── revision-notes-generator/
 ├── claude-code-skills/                 # Claude Code slash commands
 │   ├── discuss/
@@ -71,6 +74,7 @@ agent-skills/
 │   ├── flashcard-generator/
 │   ├── handoff/
 │   ├── learn/
+│   ├── quiz-generator/
 │   └── revision-notes-generator/
 ├── codex-skills/                      # Skills for Codex
 │   ├── discuss/
@@ -103,7 +107,7 @@ Use "extracting-pdfs" skill to convert this pdf into a markdown file.
 
 Generate study flashcards from PDF or Markdown content. Card design follows evidence-based principles with six specialised card types, built-in interference checking, coverage guidance prioritised by examinability, and LaTeX equation support (KaTeX-compatible).
 
-**Current version:** `flashcard-v3.11`
+**Current version:** `flashcard-v3.12`
 
 > **Full documentation:** See [`claude-ai-skills/flashcard-generator/README.md`](claude-ai-skills/flashcard-generator/README.md) for design principles, card types, output format, and card design rules.
 
@@ -121,6 +125,23 @@ Create a flashcard deck from the attached study materials using the "flashcard-g
 Output only the flashcard lines in the format "Question | Answer", one per line.
 Do not include any preamble, headers, explanations, markdown formatting,
 or code fences. The raw output will be saved directly to a text file.
+```
+
+---
+
+### Quiz Generator
+
+Generate multiple choice questions from PDF or Markdown content, as a quiz file that NeuroCards imports. Keeps the accuracy pass of the flashcard generator and replaces the card rules with rules for questions and their choices: believable wrong choices of the same form as the correct one, two to four choices, no "all of the above", and a short explanation where the answer is not plain recall.
+
+**Current version:** `quiz-v1.0`
+
+> **Full documentation:** See [`claude-ai-skills/quiz-generator/README.md`](claude-ai-skills/quiz-generator/README.md) for the question rules, output format and final check.
+
+**Sample prompt for claude.ai:**
+
+```
+Create a multiple choice quiz from the attached study materials using the "quiz-generator" skill.
+Output the quiz as a .toml file named after the source file.
 ```
 
 ---
@@ -262,7 +283,7 @@ The original PDF conversion skill using visual PDF understanding.
 
 ## Versioning
 
-This repository uses per-skill version labels. The current study-generation labels are `flashcard-v3.11` for `flashcard-generator` and `notes-v3.6` for `revision-notes-generator`. See [Releases](../../releases) for version history.
+This repository uses per-skill version labels. The current study-generation labels are `flashcard-v3.12` for `flashcard-generator`, `quiz-v1.0` for `quiz-generator` and `notes-v3.6` for `revision-notes-generator`. See [Releases](../../releases) for version history.
 
 ## License
 

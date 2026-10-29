@@ -1,6 +1,6 @@
 ---
 name: flashcard-generator
-description: Generate flashcard decks, or multiple choice quizzes for NeuroCards, from PDF or Markdown study materials. Use when the user asks for flashcards, a flashcard deck, study cards, or multiple choice questions from source material. Outputs in importable format (Question | Answer, or a NeuroCards quiz file in TOML).
+description: Generate flashcard decks from PDF or Markdown study materials. Use when the user asks for flashcards, a flashcard deck, or study cards from source material. Outputs in importable format (Question | Answer).
 ---
 
 # Flashcard Generator
@@ -101,55 +101,4 @@ What happens to the internal energy of an insulated gas when it expands? | It de
 What is the worst-case time complexity of binary search? | O(log n)
 Explain why resistance increases with temperature in a metal | Ions vibrate with greater amplitude, so electrons collide with them more frequently
 How does the elastic limit differ from the limit of proportionality? | Limit of proportionality: extension stops being proportional to force. Elastic limit: material stops returning to its original shape. Proportionality limit is reached first
-```
-
-## Quizzes
-
-When the user asks for a quiz or multiple choice questions instead of flashcards, write a NeuroCards quiz file. The Process, Coverage and accuracy rules above still apply, with questions in place of cards. The learner answers each question by picking from its choices, shown in a new order each time.
-
-### Question Style
-
-- **One idea per question.** The question makes sense and has one clear answer before the choices are read. Not "Which of these is true?", but "What does the mitochondrion release energy from?"
-- **Believable wrong choices.** Each wrong choice is a mistake a learner makes: a related term, a common misconception, a value with a typical slip. Each has the same length, form and level of detail as the correct one, so the correct choice does not stand out, and each is plainly wrong to someone who knows the topic
-- **No "all of the above" or "none of the above"**, since the choices are reordered. Never ask "which of these is NOT"
-- **Two to four choices, four by default.** Use fewer only when there are not three believable wrong choices
-- **More than one correct choice only when the question asks for all that apply** and says so, as in "Which of these are found in plant cells but not animal cells?". Never mark a choice correct that is only partly true, and never write two choices that mean the same
-- **Short choices.** A word, a phrase, a value with its unit, or one sentence. Never more than 500 characters
-- **Explanation.** One or two sentences on why the correct choice is correct and, where it helps, why the most tempting wrong choice is wrong. Leave it out for plain recall, where the answer is its own explanation
-- **True as phrased, plain language, punctuation and LaTeX** as for cards (see Card Style)
-
-Question types: definition, recall, single-step application (wrong choices from the usual slips, such as a forgotten square or a wrong unit), cause and effect, and classification (which of these are X, all that apply).
-
-Do not create: questions requiring a diagram to answer, multi-step calculations, trick questions that turn on a word, questions for constants and data values the exam supplies, or questions for content the source does not adequately explain.
-
-### Quiz File
-
-Output a TOML file named after the source, ending `.toml`:
-
-- The first line is `name = "..."`, a short name taken from the material, at most 50 characters
-- Then one `[[questions]]` table per question, with `question`, `correct` (a list of the correct choices), `wrong` (a list of the wrong choices) and, where there is one, `explanation`
-- Write each text between double quotes. A text with a backslash, such as LaTeX, or with a double quote goes between triple single quotes instead: `'''$E_k = \frac{1}{2}mv^2$'''`
-- No comments or other text in the file. Accuracy flags go in the chat response, as for cards
-
-**Example output:**
-
-```toml
-name = "Cell biology"
-
-[[questions]]
-question = "Which organelle releases most of a cell's energy by aerobic respiration?"
-correct = ["Mitochondrion"]
-wrong = ["Ribosome", "Golgi body", "Nucleus"]
-
-[[questions]]
-question = "Which of these are found in plant cells but not animal cells?"
-correct = ["Cell wall", "Chloroplasts"]
-wrong = ["Ribosomes", "Cell membrane"]
-explanation = "Animal cells have ribosomes and a membrane too, but no wall or chloroplasts."
-
-[[questions]]
-question = "What is the kinetic energy of a 2 kg mass moving at 3 m/s?"
-correct = ['''$9\;\text{J}$''']
-wrong = ['''$6\;\text{J}$''', '''$18\;\text{J}$''', '''$3\;\text{J}$''']
-explanation = '''$E_k = \frac{1}{2}mv^2 = \frac{1}{2} \times 2 \times 3^2 = 9\;\text{J}$'''
 ```

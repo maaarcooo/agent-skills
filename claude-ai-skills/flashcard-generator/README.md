@@ -1,6 +1,6 @@
 # Flashcard Generator
 
-> **Source:** Evolved from [flashcard-generator/prompt-v4.txt](https://github.com/maaarcooo/llm-custom-instructions/blob/main/flashcard-generator/prompt-v4.txt). Current skill version: **flashcard-v3.11**. A standalone fallback prompt is maintained as [`prompt-v8.md`](https://github.com/maaarcooo/llm-custom-instructions/blob/main/flashcard-generator/prompt-v8.md) for when the skill feature is unavailable. It matches flashcard-v3.11.
+> **Source:** Evolved from [flashcard-generator/prompt-v4.txt](https://github.com/maaarcooo/llm-custom-instructions/blob/main/flashcard-generator/prompt-v4.txt). Current skill version: **flashcard-v3.12**. A standalone fallback prompt is maintained as [`prompt-v7.md`](https://github.com/maaarcooo/llm-custom-instructions/blob/main/flashcard-generator/prompt-v7.md) for when the skill feature is unavailable. It matches flashcard-v3.8 and does not yet carry the v3.9 changes.
 
 Generate study flashcards from PDF or Markdown content. Cards are terse, exam-aligned, and quick to self-grade during review.
 
@@ -29,11 +29,10 @@ This split is the result of testing across model versions: prescriptive style ru
 - **Constrained final check**: Exactly three passes: name the condition on a card that is only true in context, resolve contradicting cards, and add one compare card per pair the source itself contrasts
 - **Six card types**: Definition (with reverse cards for terms only), recall, formula application, cloze, explain, enumeration
 - **Content-driven deck size**: No card-count targets; the material decides
-- **Multiple choice quizzes**: Asked for a quiz instead, the skill writes a NeuroCards quiz file in TOML: one idea per question, two to four choices with believable wrong ones, no "all of the above", and a short explanation where the answer is not plain recall
 
 ## When to Use
 
-When the user asks for flashcards, a flashcard deck, or study cards from source material, or for multiple choice questions to import into NeuroCards as a quiz.
+When the user asks for flashcards, a flashcard deck, or study cards from source material. For multiple choice questions, use `quiz-generator`.
 
 ## How It Works
 
@@ -151,7 +150,8 @@ Then trigger by asking for flashcards from source material.
 
 ## Version Notes
 
-- **flashcard-v3.11**: A Quizzes section for multiple choice questions, written as a NeuroCards quiz file in TOML (`name`, then `[[questions]]` tables with `question`, `correct`, `wrong` and an optional `explanation`). The question rules are the ones NeuroCards generates quizzes with: one idea per question, believable wrong choices of the same form as the correct one, two to four choices, all that apply only when the question says so, no "all of the above" or "which of these is NOT", short choices, and an explanation only where the answer is not its own. The card rules are unchanged
+- **flashcard-v3.12**: The Quizzes section moved to a skill of its own, `quiz-generator`, because several card rules contradict a multiple choice question (production rather than recognition, reverse cards, one `Question | Answer` line per card) and the model had to work out which ones to drop. The card rules are the same as in v3.10
+- **flashcard-v3.11**: A Quizzes section for multiple choice questions, written as a NeuroCards quiz file in TOML. Superseded by v3.12
 - **flashcard-v3.10**: Punctuation rule taken from the NeuroCards prompt: no em-dashes or semicolons on a card, and a reverse card ends ` - what term is this?` with a hyphen. The skill's own text no longer uses em-dashes
 - **flashcard-v3.9**: Brought into line with the generation prompt tuned in NeuroCards on Claude Haiku 5.5, Sonnet 5.5 and Opus 5.5 (October 2026). New rules: every card true as phrased, with its condition in the question; one worked single-step card per main equation; practicals covered as methods; reverse cards for terms only; no cards for rearranged equations, for constants and data values the exam supplies, or for content the material says need not be learned. Three of these were loosened after testing showed them too tight: a table the material teaches is carded row by row (a deck had dropped where digestive enzymes are made), a condition is added only when the specification states it with the fact (a GCSE card had gained "at standard pressure"), and a formula booklet does not decide what gets a card (Opus had dropped the quotient rule). The Coverage section replaces "prioritise, and do not pad", which cost a deck its statement of the first law of thermodynamics and a unit. The check after generating grows from two passes to three. Chat flags gain `Tightened:`. The rules were tested as the NeuroCards prompt, which returns JSON; this skill file, with its pipe-separated output, was not run separately
 - **flashcard-v3.8**: Accuracy pass reworked: the named qualification and exam board's specification is the authority; a confident correction goes on the cards and is listed in chat, a doubtful one means the content is left out with the reason given, and no card ever carries a statement the model believes wrong. Out-of-spec content is flagged rather than added. Chat flags are now a release-note bullet list (`Fixed:` / `Skipped:` / `Kept:` / `Flagged:`). Prompted by real decks generated from OCR A Level notes where a swapped example table was kept because it only "seemed" reversed
