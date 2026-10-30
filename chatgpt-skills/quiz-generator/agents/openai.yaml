@@ -2,8 +2,9 @@ interface:
   display_name: quiz generator
   short_description: Generate multiple choice quizzes for NeuroCards from PDF or
     Markdown study materials. Use when the user asks for multiple choice questions,
-    a multiple choice quiz, or a NeuroCards quiz file from source material. Outputs
-    a NeuroCards quiz file in TOML.
+    a multiple choice quiz, or a NeuroCards quiz file from source material, or for
+    changes to a NeuroCards quiz file they already have. Outputs a NeuroCards quiz
+    file in TOML.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

@@ -1,6 +1,6 @@
 ---
 name: quiz-generator
-description: Generate multiple choice quizzes for NeuroCards from PDF or Markdown study materials. Use when the user asks for multiple choice questions, a multiple choice quiz, or a NeuroCards quiz file from source material. Outputs a NeuroCards quiz file in TOML.
+description: Generate multiple choice quizzes for NeuroCards from PDF or Markdown study materials. Use when the user asks for multiple choice questions, a multiple choice quiz, or a NeuroCards quiz file from source material, or for changes to a NeuroCards quiz file they already have. Outputs a NeuroCards quiz file in TOML.
 ---
 
 # Quiz Generator
@@ -17,6 +17,8 @@ Generate multiple choice questions from PDF or Markdown content, as a quiz file 
 6. Output the quiz file (see Output Format)
 
 If the user gives instructions with the material (for example restricting to one topic), follow them. The coverage and exclusions then apply to the selected scope only.
+
+If the user gives a quiz file they already have and asks for changes, see Editing a Quiz.
 
 ## Question Style
 
@@ -91,3 +93,17 @@ correct = ['''$9\;\text{J}$''']
 wrong = ['''$6\;\text{J}$''', '''$18\;\text{J}$''', '''$3\;\text{J}$''']
 explanation = '''$E_k = \frac{1}{2}mv^2 = \frac{1}{2} \times 2 \times 3^2 = 9\;\text{J}$'''
 ```
+
+## Editing a Quiz
+
+When the user gives a NeuroCards quiz file they already have, pasted or attached, and asks for changes, such as new questions, better wrong choices or questions taken out:
+
+- Change what the user asks for, and mistakes you are confident of (see Process step 2). Leave everything else as it is
+- Keep the `name` line, and a `description` line if there is one, exactly as they are
+- Copy every question you are not changing word for word and in its place, so NeuroCards can tell what changed and keep each question's review history. The order of a question's choices does not matter
+- Leave out the questions the user asks to remove
+- New and edited questions follow Question Style, Question Types and Exclusions, and get the Final Check
+- Output the whole quiz file, not only the changed questions, under the same file name and in the same format: TOML as in Output Format, or JSON with the same fields where the file was JSON
+- In the chat response, list the changes in the manner of release notes: one line per change, each starting with `Added:`, `Edited:` or `Removed:`, after any accuracy flags
+
+The user brings the file back with Update from file in the quiz's menu in NeuroCards, which shows every change before it is made.

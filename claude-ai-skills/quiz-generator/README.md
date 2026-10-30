@@ -1,6 +1,6 @@
 # Quiz Generator
 
-> **Source:** Split out of `flashcard-generator` (its v3.11 Quizzes section) into a skill of its own. Current skill version: **quiz-v1.1**. A standalone fallback prompt is maintained as [`quiz-generator/prompt-v2.md`](https://github.com/maaarcooo/llm-custom-instructions/blob/main/quiz-generator/prompt-v2.md) for when the skill feature is unavailable. It matches quiz-v1.1.
+> **Source:** Split out of `flashcard-generator` (its v3.11 Quizzes section) into a skill of its own. Current skill version: **quiz-v1.2**. A standalone fallback prompt is maintained as [`quiz-generator/prompt-v3.md`](https://github.com/maaarcooo/llm-custom-instructions/blob/main/quiz-generator/prompt-v3.md) for when the skill feature is unavailable. It matches quiz-v1.2.
 
 Generate multiple choice questions from PDF or Markdown content, as a quiz file that NeuroCards imports. Each question tests one idea, is quick to answer, and is fair to someone who knows the topic.
 
@@ -23,10 +23,11 @@ The question rules NeuroCards generates quizzes with, as a skill. It keeps the a
 - **True as phrased**: A condition the answer depends on goes in the question
 - **Constrained final check**: Exactly two passes: name the condition on a question that is only true in context, and replace a wrong choice that is arguably correct
 - **Content-driven quiz size**: No question-count targets; the material decides
+- **Edits a quiz you have**: Given a NeuroCards quiz file, it changes what you ask for, copies every other question word for word so NeuroCards keeps their review history, and returns the whole file
 
 ## When to Use
 
-When the user asks for multiple choice questions, a multiple choice quiz, or a NeuroCards quiz file from source material. For flashcards, use `flashcard-generator`.
+When the user asks for multiple choice questions, a multiple choice quiz, or a NeuroCards quiz file from source material, or for changes to a NeuroCards quiz file they already have. For flashcards, use `flashcard-generator`.
 
 ## How It Works
 
@@ -66,6 +67,10 @@ wrong = ["Ribosomes", "Cell membrane"]
 explanation = "Animal cells have ribosomes and a membrane too, but no wall or chloroplasts."
 ```
 
+## Editing a Quiz
+
+Give it a quiz file exported from NeuroCards (the quiz's **⋯** menu, **Export quiz**) and say what to change. It keeps the `name` and `description` lines, copies every question it does not change word for word and in place, writes new and edited questions to the same rules, and returns the whole file with its changes listed in chat as `Added:`, `Edited:` and `Removed:` bullets. Bring it back with **Update from file** in the same menu: questions it kept the same keep their review history, and a question whose choices only moved counts as unchanged.
+
 ## Sample Prompts
 
 **claude.ai:**
@@ -73,6 +78,13 @@ explanation = "Animal cells have ribosomes and a membrane too, but no wall or ch
 ```
 Create a multiple choice quiz from the attached study materials using the "quiz-generator" skill.
 Output the quiz as a .toml file named after the source file (e.g. Physics_Chapter_5.pdf → Physics_Chapter_5.toml).
+```
+
+**Editing a quiz on claude.ai:**
+
+```
+Using the "quiz-generator" skill, add questions for anything in the attached notes this quiz misses, and replace any wrong choice that is too easy to rule out.
+Return the whole quiz file with the same name.
 ```
 
 **Claude API:**
@@ -97,5 +109,6 @@ Then trigger by asking for multiple choice questions from source material.
 
 ## Version Notes
 
+- **quiz-v1.2**: Editing a Quiz: given a quiz file the user already has, change what they ask for, keep the name and description lines, copy unchanged questions word for word and in place so NeuroCards keeps their review history, and return the whole file with the changes listed as `Added:`, `Edited:` and `Removed:` bullets. Matches the rules of Ask through your own AI service in NeuroCards (service-5)
 - **quiz-v1.1**: Several correct choices are asked for by the question's own wording, with no "(Select all that apply)" note in the question, since NeuroCards shows one when a question has more than one correct choice
 - **quiz-v1.0**: The Quizzes section of `flashcard-generator` v3.11 as a skill of its own, so the card rules no longer apply to questions. Rules match the prompt NeuroCards generates quizzes with (October 2026): one idea per question, believable wrong choices of the same form as the correct one, two to four choices, all that apply only when the question says so, short choices, an explanation only where the answer is not its own, and a final check for unstated context and arguably correct wrong choices. Not yet run as a skill on its own; the rules were tested as the NeuroCards prompt, which returns JSON
